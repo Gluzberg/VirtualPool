@@ -23,8 +23,8 @@ The given structure was modified as follows:
     - Logout
     - BlockArticle
     - ReleaseArticle
-- VirtualPool.Manager.Data**
-  - Contains the _PoolManager_ class whoich implements the _IPoolManager_ using the DB context from **VirtualPool.Data**.
+- VirtualPool.Manager.Data
+  - Contains the _PoolManager_ class which implements the _IPoolManager_ using the DB context from **VirtualPool.Data**.
 
 # Implementation Details
 
