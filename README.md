@@ -1,4 +1,4 @@
-# Virtial Pool - Documentation
+# Virtual Pool - Documentation
 
 Marina Gluzberg
 26.04.2018
