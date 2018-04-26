@@ -16,7 +16,7 @@ The given structure was modified as follows:
 - VirtualPool.Client
   - This project contains the console application that manages the dialog with user and triggers the relevant actions of the _IPoolManager_ from VirtualPool.Manager project.
 - VirtualPool.Data
-  - The DB context and models.
+  - The DB context and models (Generated Source).
 - VirtualPool.Manager
   - The _IPoolManager_ interface that declares the following actions:
     - Login
