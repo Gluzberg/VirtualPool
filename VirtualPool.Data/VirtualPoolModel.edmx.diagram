@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e159a11f356247c297ae2e481f993c9f" Name="Diagram1">
+        <EntityTypeShape EntityType="virtualpoolModel.article" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="virtualpoolModel.client_user" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="virtualpoolModel.pool" Width="1.5" PointX="9.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="virtualpoolModel.product" Width="1.5" PointX="5.25" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="virtualpoolModel.product_category" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="virtualpoolModel.FK_article_product" ManuallyRouted="false" />
+        <AssociationConnector Association="virtualpoolModel.FK_pool_article" ManuallyRouted="false" />
+        <AssociationConnector Association="virtualpoolModel.FK_blocking_user_product" ManuallyRouted="false" />
+        <AssociationConnector Association="virtualpoolModel.FK_user_product_category" ManuallyRouted="false" />
+        <AssociationConnector Association="virtualpoolModel.FK_product_product_category" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

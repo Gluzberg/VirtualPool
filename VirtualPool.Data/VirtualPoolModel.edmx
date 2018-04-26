@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="virtualpoolModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="article">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Product_Id" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="client_user">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Product_Category_Id" Type="utinyint" />
+        </EntityType>
+        <EntityType Name="pool">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Article_Id" Type="varchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Category_Id" Type="utinyint" Nullable="false" />
+          <Property Name="Blocking_User_Id" Type="varchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="product_category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="utinyint" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_article_product">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="article" Type="Self.article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="article">
+              <PropertyRef Name="Product_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_blocking_user_product">
+          <End Role="client_user" Type="Self.client_user" Multiplicity="0..1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client_user">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="Blocking_User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pool_article">
+          <End Role="article" Type="Self.article" Multiplicity="1" />
+          <End Role="pool" Type="Self.pool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="article">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="pool">
+              <PropertyRef Name="Article_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_product_product_category">
+          <End Role="product_category" Type="Self.product_category" Multiplicity="1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_product_category">
+          <End Role="product_category" Type="Self.product_category" Multiplicity="0..1" />
+          <End Role="client_user" Type="Self.client_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="client_user">
+              <PropertyRef Name="Product_Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="virtualpoolModelStoreContainer">
+          <EntitySet Name="article" EntityType="Self.article" Schema="virtualpool" store:Type="Tables" />
+          <EntitySet Name="client_user" EntityType="Self.client_user" Schema="virtualpool" store:Type="Tables" />
+          <EntitySet Name="pool" EntityType="Self.pool" Schema="virtualpool" store:Type="Tables" />
+          <EntitySet Name="product" EntityType="Self.product" Schema="virtualpool" store:Type="Tables" />
+          <EntitySet Name="product_category" EntityType="Self.product_category" Schema="virtualpool" store:Type="Tables" />
+          <AssociationSet Name="FK_article_product" Association="Self.FK_article_product">
+            <End Role="product" EntitySet="product" />
+            <End Role="article" EntitySet="article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_blocking_user_product" Association="Self.FK_blocking_user_product">
+            <End Role="client_user" EntitySet="client_user" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pool_article" Association="Self.FK_pool_article">
+            <End Role="article" EntitySet="article" />
+            <End Role="pool" EntitySet="pool" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product_product_category" Association="Self.FK_product_product_category">
+            <End Role="product_category" EntitySet="product_category" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_product_category" Association="Self.FK_user_product_category">
+            <End Role="product_category" EntitySet="product_category" />
+            <End Role="client_user" EntitySet="client_user" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="virtualpoolModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="article">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Product_Id" Type="Int32" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="product" Relationship="Self.FK_article_product" FromRole="article" ToRole="product" />
+          <NavigationProperty Name="pool" Relationship="Self.FK_pool_article" FromRole="article" ToRole="pool" />
+        </EntityType>
+        <EntityType Name="client_user">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Product_Category_Id" Type="Byte" />
+          <NavigationProperty Name="product" Relationship="Self.FK_blocking_user_product" FromRole="client_user" ToRole="product" />
+          <NavigationProperty Name="product_category" Relationship="Self.FK_user_product_category" FromRole="client_user" ToRole="product_category" />
+        </EntityType>
+        <EntityType Name="pool">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Article_Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="article" Relationship="Self.FK_pool_article" FromRole="pool" ToRole="article" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Category_Id" Type="Byte" Nullable="false" />
+          <Property Name="Blocking_User_Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="article" Relationship="Self.FK_article_product" FromRole="product" ToRole="article" />
+          <NavigationProperty Name="client_user" Relationship="Self.FK_blocking_user_product" FromRole="product" ToRole="client_user" />
+          <NavigationProperty Name="product_category" Relationship="Self.FK_product_product_category" FromRole="product" ToRole="product_category" />
+        </EntityType>
+        <EntityType Name="product_category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="client_user" Relationship="Self.FK_user_product_category" FromRole="product_category" ToRole="client_user" />
+          <NavigationProperty Name="product" Relationship="Self.FK_product_product_category" FromRole="product_category" ToRole="product" />
+        </EntityType>
+        <Association Name="FK_article_product">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="article" Type="Self.article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="article">
+              <PropertyRef Name="Product_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pool_article">
+          <End Role="article" Type="Self.article" Multiplicity="1" />
+          <End Role="pool" Type="Self.pool" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="article">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="pool">
+              <PropertyRef Name="Article_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_blocking_user_product">
+          <End Role="client_user" Type="Self.client_user" Multiplicity="0..1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client_user">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="Blocking_User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_product_category">
+          <End Role="product_category" Type="Self.product_category" Multiplicity="0..1" />
+          <End Role="client_user" Type="Self.client_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="client_user">
+              <PropertyRef Name="Product_Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_product_product_category">
+          <End Role="product_category" Type="Self.product_category" Multiplicity="1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="virtualpoolEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="article" EntityType="Self.article" />
+          <EntitySet Name="client_user" EntityType="Self.client_user" />
+          <EntitySet Name="pool" EntityType="Self.pool" />
+          <EntitySet Name="product" EntityType="Self.product" />
+          <EntitySet Name="product_category" EntityType="Self.product_category" />
+          <AssociationSet Name="FK_article_product" Association="Self.FK_article_product">
+            <End Role="product" EntitySet="product" />
+            <End Role="article" EntitySet="article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pool_article" Association="Self.FK_pool_article">
+            <End Role="article" EntitySet="article" />
+            <End Role="pool" EntitySet="pool" />
+          </AssociationSet>
+          <AssociationSet Name="FK_blocking_user_product" Association="Self.FK_blocking_user_product">
+            <End Role="client_user" EntitySet="client_user" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_product_category" Association="Self.FK_user_product_category">
+            <End Role="product_category" EntitySet="product_category" />
+            <End Role="client_user" EntitySet="client_user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product_product_category" Association="Self.FK_product_product_category">
+            <End Role="product_category" EntitySet="product_category" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="virtualpoolModelStoreContainer" CdmEntityContainer="virtualpoolEntities">
+          <EntitySetMapping Name="article">
+            <EntityTypeMapping TypeName="virtualpoolModel.article">
+              <MappingFragment StoreEntitySet="article">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Product_Id" ColumnName="Product_Id" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="client_user">
+            <EntityTypeMapping TypeName="virtualpoolModel.client_user">
+              <MappingFragment StoreEntitySet="client_user">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Product_Category_Id" ColumnName="Product_Category_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pool">
+            <EntityTypeMapping TypeName="virtualpoolModel.pool">
+              <MappingFragment StoreEntitySet="pool">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Article_Id" ColumnName="Article_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product">
+            <EntityTypeMapping TypeName="virtualpoolModel.product">
+              <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Category_Id" ColumnName="Category_Id" />
+                <ScalarProperty Name="Blocking_User_Id" ColumnName="Blocking_User_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product_category">
+            <EntityTypeMapping TypeName="virtualpoolModel.product_category">
+              <MappingFragment StoreEntitySet="product_category">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Kein" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
